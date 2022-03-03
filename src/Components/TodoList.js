@@ -21,7 +21,7 @@ const TodoList = (props) => {
             <ul
                 style={{
                     height: "300px",
-                    border: "1px solid orange",
+                    // border: "1px solid orange",
                     margin: "10px",
                     padding: "10px",
                     listStyle: "none",

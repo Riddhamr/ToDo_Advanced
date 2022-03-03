@@ -24,16 +24,20 @@ const AddTodo = (props) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form
+            style={{ display: "flex", gap: "20px", padding: "0px 30px" }}
+            onSubmit={handleSubmit}
+        >
             {!emptyList && (
                 <input
+                    placeholder="check All"
                     type="checkbox"
                     checked={checkedAll}
                     onChange={handleCheckAll}
                 />
             )}
             <input
-                type="text"
+                style={{ flexGrow: 1 }}
                 placeholder="Add Todo Title"
                 value={value}
                 onChange={handleOnChange}

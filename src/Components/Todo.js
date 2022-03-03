@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 const Todo = (props) => {
-    const { todo: todoData, onTodoChanged, focusTodo, setFocusHelper } = props;
-    const [todo, setTodo] = useState(todoData);
+    const { todo, onTodoChanged, focusTodo, setFocusHelper } = props;
+    // const [todo, setTodo] = useState(todoData);
 
     return (
         <div
@@ -10,6 +10,7 @@ const Todo = (props) => {
             style={{
                 border: "1px solid black",
                 padding: "5px",
+                margin: "5px 0",
                 display: "flex",
             }}
         >
@@ -18,23 +19,34 @@ const Todo = (props) => {
                 type="checkbox"
                 checked={todo.completed}
                 onChange={(e) => {
-                    e.style.height = "5px";
-                    e.style.height = e.scrollHeight + "px";
-                    setTodo(() => ({
+                    onTodoChanged("update", {
                         ...todo,
                         completed: e.target.checked,
-                    }));
+                    });
                 }}
                 style={{
                     borderRadius: "50%",
                     height: "18px",
                     width: "18px",
                     border: "1px solid #aaa",
-                    appearance: "none",
+                    margin: "2px 5px",
+                    // appearance: "none",
                 }}
             />
-            <div>
-                <div>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "5px",
+                }}
+            >
+                <div
+                    style={{
+                        display: "flex",
+                        gap: "5px",
+                        justifyContents: "space-between",
+                    }}
+                >
                     <span style={{ color: "red" }}>
                         {"!".repeat(todo.priority)}
                     </span>
@@ -42,10 +54,10 @@ const Todo = (props) => {
                         name="title"
                         value={todo.title}
                         onChange={(e) => {
-                            setTodo(() => ({
+                            onTodoChanged("update", {
                                 ...todo,
                                 title: e.target.value,
-                            }));
+                            });
                         }}
                         onClick={(e) => setFocusHelper(e, todo.id)}
                     ></input>
@@ -53,10 +65,10 @@ const Todo = (props) => {
                         name="priority"
                         value={todo.priority}
                         onChange={(e) => {
-                            setTodo(() => ({
+                            onTodoChanged("update", {
                                 ...todo,
                                 priority: e.target.value,
-                            }));
+                            });
                         }}
                         onClick={(e) => setFocusHelper(e, todo.id)}
                     >
@@ -78,17 +90,17 @@ const Todo = (props) => {
                             name="note"
                             placeholder="note"
                             style={{
-                                color: "gray",
                                 resize: "none",
-                                width: "400px",
+                                width: "300px",
+                                minHeight: "30px",
                                 maxHeight: "100px",
                             }}
                             value={todo.note}
                             onChange={(e) => {
-                                setTodo(() => ({
+                                onTodoChanged("update", {
                                     ...todo,
                                     note: e.target.value,
-                                }));
+                                });
                                 e.target.style.height = "5px";
                                 e.target.style.height =
                                     e.target.scrollHeight + "px";
