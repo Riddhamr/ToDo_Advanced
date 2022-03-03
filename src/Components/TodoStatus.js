@@ -9,7 +9,13 @@ const TodoStatus = (props) => {
         onClickClearCompleted,
     } = props;
     return (
-        <div>
+        <div
+            style={{
+                border: "1px solid black",
+                display: "flex",
+                justifyContent: "space-around",
+            }}
+        >
             <div>{itemLeft} items left</div>
             <div>
                 <button onClick={onClickAll}>All</button>
@@ -19,7 +25,6 @@ const TodoStatus = (props) => {
             <div>
                 <button onClick={onClickClearCompleted}>Clear Completed</button>
             </div>
-        
         </div>
     );
 };

@@ -32,7 +32,12 @@ const AddTodo = (props) => {
                     onChange={handleCheckAll}
                 />
             )}
-            <input type="text" value={value} onChange={handleOnChange}></input>
+            <input
+                type="text"
+                placeholder="Add Todo Title"
+                value={value}
+                onChange={handleOnChange}
+            ></input>
         </form>
     );
 };
