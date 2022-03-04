@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import AddTodo from "./Components/AddTodo";
-import TodoList from "./Components/TodoList";
+import React from "react";
 import { useLocalStorageState } from "./Hooks/useLocalStorageState";
-import { v4 as uuidv4 } from "uuid";
 import "./app.css";
+import { Hero } from "./Layout/Hero";
 
 function App() {
     const [todoList, setTodoList] = useLocalStorageState(
@@ -31,66 +29,13 @@ function App() {
     //     },
     // ]);
 
-    const selectAll = (checked) => {
-        const newTodo = todoList.map((todo) => ({
-            ...todo,
-            completed: checked,
-        }));
-        setTodoList(newTodo);
-    };
-
-    const addTodoItem = (title) => {
-        const newTodo = {
-            id: uuidv4(),
-            title: title,
-            note: "",
-            completed: false,
-            flagged: false,
-            priority: 0,
-        };
-        setTodoList((prevList) => [...prevList, newTodo]);
-    };
-
-    const onTodoChanged = (type, updateTodo) => {
-        console.log("updated", updateTodo);
-        let newTodo;
-        console.log(updateTodo.title);
-        if (type === "update") {
-            console.log("update");
-            newTodo = todoList.map((todo) =>
-                todo.id === updateTodo.id ? updateTodo : todo
-            );
-        } else if (type === "delete") {
-            console.log("delete", updateTodo);
-
-            newTodo = todoList.filter((todo) => todo.id === updateTodo.id);
-        } else {
-            throw new Error("Operation type not defined");
-        }
-        setTodoList(newTodo);
-    };
-
-    const onClickClearCompleted = () => {
-        const updatedTodo = todoList.filter((todo) => todo.completed === false);
-        setTodoList(updatedTodo);
-    };
-
-    const emptyList = todoList.length === 0;
-
     return (
         <div className="App">
-            {/* {console.log(todoList)} */}
             <div className="App-wrapper">
-                <AddTodo
-                    selectAll={selectAll}
-                    addTodoItem={addTodoItem}
-                    emptyList={emptyList}
-                />
-                <TodoList
+                <Hero
+                    type={{ name: "Reminders", color: "orange" }}
                     todoList={todoList}
-                    onTodoChanged={onTodoChanged}
-                    onClickClearCompleted={onClickClearCompleted}
-                    emptyList={emptyList}
+                    setTodoList={setTodoList}
                 />
             </div>
         </div>

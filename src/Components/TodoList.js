@@ -1,30 +1,23 @@
 import React, { useState } from "react";
 import Todo from "./Todo";
-import TodoStatus from "./TodoStatus";
 
-const TodoList = (props) => {
-    const { emptyList, todoList, onTodoChanged, onClickClearCompleted } = props;
-    const [status, setStatus] = useState("all");
-    const [focusTodo, setFocus] = useState("");
-
-    const itemLeft = todoList.reduce((count, todo) => {
-        return todo.completed === false ? count + 1 : count;
-    }, 0);
+const TodoList = ({ children, ...props }) => {
+    const { color, status, todoList, onTodoChanged } = props;
+    const [focusTodo, setFocusToDo] = useState("");
 
     const setFocusHelper = (e, id) => {
         e.stopPropagation();
-        setFocus(id);
+        setFocusToDo(id);
     };
 
     return (
         <div onClick={(e) => setFocusHelper(e, "")}>
             <ul
                 style={{
-                    height: "300px",
-                    // border: "1px solid orange",
-                    margin: "10px",
-                    padding: "10px",
+                    height: "400px",
                     listStyle: "none",
+                    overflow: "scroll",
+                    paddingBottom: "30px",
                 }}
             >
                 {todoList
@@ -38,6 +31,7 @@ const TodoList = (props) => {
                     .map((todo) => (
                         <li key={todo.id}>
                             <Todo
+                                color={color}
                                 focusTodo={focusTodo}
                                 setFocusHelper={setFocusHelper}
                                 todo={todo}
@@ -45,16 +39,8 @@ const TodoList = (props) => {
                             />
                         </li>
                     ))}
+                {children && <li key="addTodo">{children}</li>}
             </ul>
-            {!emptyList && (
-                <TodoStatus
-                    itemLeft={itemLeft}
-                    onClickAll={() => setStatus("all")}
-                    onClickActive={() => setStatus("active")}
-                    onClickCompleted={() => setStatus("completed")}
-                    onClickClearCompleted={onClickClearCompleted}
-                />
-            )}
         </div>
     );
 };
